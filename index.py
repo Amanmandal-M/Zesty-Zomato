@@ -88,7 +88,6 @@ def take_order():
     print("Order processed successfully!")
 
 
-
 def update_order_status():
     order_id = int(input("\nEnter the order ID to update status: "))
     for order in orders:
@@ -176,9 +175,9 @@ def user_section():
 def main_section():
     while True:
         print("\nMain Menu Options:")
-        print("1. Admin Section")
-        print("2. User Section")
-        print("3. Exit")
+        print(Fore.GREEN + "1. Admin Section" + Style.RESET_ALL)
+        print(Fore.GREEN + "2. User Section" + Style.RESET_ALL)
+        print(Fore.RED + "3. Exit" + Style.RESET_ALL)
 
         choice = input("Enter your choice (1-3): ")
 
