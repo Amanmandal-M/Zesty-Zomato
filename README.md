@@ -87,6 +87,6 @@ The culinary world of Zesty Zomato is waiting for your command-line system. Unle
 
 <br>
 
-## :small_blue_diamond: Execution Video
+## Video
 
-[![Video](https://drive.google.com/file/d/173qlCyzbuowsWynEZnK6gmQrBVpasm8l/view)](https://drive.google.com/file/d/173qlCyzbuowsWynEZnK6gmQrBVpasm8l/view)
+[![Video](./picture.png](https://drive.google.com/file/d/173qlCyzbuowsWynEZnK6gmQrBVpasm8l/view)
