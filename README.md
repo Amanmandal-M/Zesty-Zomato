@@ -84,3 +84,9 @@ For those who finish early or are seeking an extra challenge, consider adding th
 3. **Robustness** : Like a versatile chef, does the program handle unexpected or invalid user input gracefully, ensuring the operations run smoothly?
 
 The culinary world of Zesty Zomato is waiting for your command-line system. Unleash your Python skills to create an efficient system that will keep the taste buds of Mumbai satiated. Good luck!
+
+<br>
+
+## :small_blue_diamond: Execution Video
+
+[![Video](./picture.png)](https://drive.google.com/file/d/173qlCyzbuowsWynEZnK6gmQrBVpasm8l/view)
