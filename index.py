@@ -184,14 +184,28 @@ def admin_section():
     else:
         print(Fore.RED + "Invalid credentials. Access denied." + Style.RESET_ALL)
 
+def check_already_customer():
+   isValid = input("\nAre you a Customer?  YES/NO : ")
+   if isValid == "YES":
+    return user_login()
+   else:
+    return user_registration()
+
+   
 
 def user_registration():
     print("\nUser Registration:")
+    valid = input("Proceed Further? YES/NO : ")
+    
+    if valid == "NO":
+        return user_login()
+    
     name = input("Enter your name: ")
     email = input("Enter your email: ")
 
     if email in users:
         print("Email already registered. Please login or use a different email.")
+        return user_login()
     else:
         password = getpass("Enter your password: ")
         users[email] = {
@@ -199,11 +213,17 @@ def user_registration():
             "password": password
         }
         print("Registration successful. You can now log in with your credentials.")
-        user_login()
+        return user_login()
 
 
 def user_login():
     print("\nUser Login:")
+    
+    valid = input("Proceed Further? YES/NO : ")
+    
+    if valid == "NO":
+        return user_registration()
+    
     email = input("Enter your email: ")
     password = getpass("Enter your password: ")
 
@@ -212,6 +232,7 @@ def user_login():
         user_section(email)
     else:
         print(Fore.RED + "Invalid credentials. Access denied." + Style.RESET_ALL)
+        user_login()
 
 
 # Performs the actions for the user section
@@ -253,7 +274,7 @@ def main():
         if choice == "1":
             admin_section()
         elif choice == "2":
-            user_registration()
+            check_already_customer()
         elif choice == "3":
             break
         else:
