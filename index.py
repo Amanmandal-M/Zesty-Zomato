@@ -13,6 +13,9 @@ menu = {
 # Menu dictionary containing dish information
 orders = []
 
+#
+users = {}
+
 
 # Menu dictionary containing dish information
 admin_username = "admin"
@@ -182,8 +185,37 @@ def admin_section():
         print(Fore.RED + "Invalid credentials. Access denied." + Style.RESET_ALL)
 
 
+def user_registration():
+    print("\nUser Registration:")
+    name = input("Enter your name: ")
+    email = input("Enter your email: ")
+
+    if email in users:
+        print("Email already registered. Please login or use a different email.")
+    else:
+        password = getpass("Enter your password: ")
+        users[email] = {
+            "name": name,
+            "password": password
+        }
+        print("Registration successful. You can now log in with your credentials.")
+        user_login()
+
+
+def user_login():
+    print("\nUser Login:")
+    email = input("Enter your email: ")
+    password = getpass("Enter your password: ")
+
+    if email in users and users[email]["password"] == password:
+        print(Fore.GREEN + f"Welcome, {users[email]['name']}!" + Style.RESET_ALL)
+        user_section(email)
+    else:
+        print(Fore.RED + "Invalid credentials. Access denied." + Style.RESET_ALL)
+
+
 # Performs the actions for the user section
-def user_section():
+def user_section(email):
     print(Fore.GREEN + "\nUser Section" + Style.RESET_ALL)
     while True:
         print(Fore.GREEN + "\nUser Menu Options:" + Style.RESET_ALL)
@@ -197,7 +229,7 @@ def user_section():
         if choice == "1":
             display_menu()
         elif choice == "2":
-            take_order()
+            take_order(email)
         elif choice == "3":
             update_order_status()
         elif choice == "4":
@@ -221,7 +253,7 @@ def main():
         if choice == "1":
             admin_section()
         elif choice == "2":
-            user_section()
+            user_registration()
         elif choice == "3":
             break
         else:
