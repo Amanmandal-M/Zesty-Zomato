@@ -13,7 +13,7 @@ menu = {
 # Menu dictionary containing dish information
 orders = []
 
-#
+# User dictionary containing user information
 users = {}
 
 
@@ -22,15 +22,18 @@ admin_username = "admin"
 admin_password = "zomato"
 
 
-## Menu dictionary containing dish information
+# Menu dictionary containing dish information
 def display_menu():
     print("\nMenu:")
     headers = ["Dish ID", "Name", "Price", "Availability", "Quantity"]
     table_data = []
 
     for dish_id, dish_info in menu.items():
-        availability = Fore.GREEN + "Available" if dish_info["quantity"] > 0 else Fore.RED + "Not Available"
-        table_data.append([dish_id, dish_info['name'], dish_info['price'], availability + Style.RESET_ALL, dish_info['quantity']])
+        availability = Fore.GREEN + \
+            "Available" if dish_info["quantity"] > 0 else Fore.RED + \
+            "Not Available"
+        table_data.append([dish_id, dish_info['name'], dish_info['price'],
+                          availability + Style.RESET_ALL, dish_info['quantity']])
 
     print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
 
@@ -87,11 +90,13 @@ def take_order():
         if dish_id in menu:
             dish_info = menu[dish_id]
             if not dish_info["available"]:
-                print(Fore.RED + f"{dish_info['name']} is not available. Order cannot be processed." + Style.RESET_ALL)
+                print(
+                    Fore.RED + f"{dish_info['name']} is not available. Order cannot be processed." + Style.RESET_ALL)
                 return
-            
+
             if dish_info["quantity"] <= 0:
-                print(Fore.RED + f"{dish_info['name']} is out of stock. Order cannot be processed." + Style.RESET_ALL)
+                print(
+                    Fore.RED + f"{dish_info['name']} is out of stock. Order cannot be processed." + Style.RESET_ALL)
                 return
 
             orders.append({
@@ -101,10 +106,13 @@ def take_order():
                 "status": order_status
             })
 
-            dish_info["quantity"] -= 1  # Reduce the quantity of the ordered dish by 1
-            print(Fore.GREEN + f"{dish_info['name']} added to the order! Order ID: {order_id}" + Style.RESET_ALL)
+            # Reduce the quantity of the ordered dish by 1
+            dish_info["quantity"] -= 1
+            print(
+                Fore.GREEN + f"{dish_info['name']} added to the order! Order ID: {order_id}" + Style.RESET_ALL)
         else:
-            print(Fore.RED + f"Dish with ID {dish_id} not found in the menu." + Style.RESET_ALL)
+            print(
+                Fore.RED + f"Dish with ID {dish_id} not found in the menu." + Style.RESET_ALL)
             return
 
     print("Order processed successfully!")
@@ -130,7 +138,8 @@ def review_orders():
     if not orders:
         print("No orders available.")
     else:
-        headers = ["Order ID", "Customer", "Dish", "Status", "Remaining Quantity"]
+        headers = ["Order ID", "Customer", "Dish",
+                   "Status", "Remaining Quantity"]
         table_data = []
 
         for order in orders:
@@ -140,16 +149,18 @@ def review_orders():
             dish = menu.get(dish_id, {}).get('name', 'Unknown')
             status = order['status']
             remaining_quantity = menu.get(dish_id, {}).get('quantity', 0)
-            table_data.append([order_id, customer, dish, status, remaining_quantity])
+            table_data.append(
+                [order_id, customer, dish, status, remaining_quantity])
 
-        print(tabulate(table_data, headers=headers, tablefmt="fancy_grid", colalign=("center", "center", "center", "center", "center"), numalign="center", stralign="center", disable_numparse=True))
+        print(tabulate(table_data, headers=headers, tablefmt="fancy_grid", colalign=("center", "center",
+              "center", "center", "center"), numalign="center", stralign="center", disable_numparse=True))
 
 
 # Updates the status of an order
 def admin_section():
     print(Fore.BLUE + "\nAdmin Section" + Style.RESET_ALL)
     username = input("Enter username: ")
-    
+
     # Password is hidden for security reasons
     password = getpass("Enter password: ")
 
@@ -184,22 +195,24 @@ def admin_section():
     else:
         print(Fore.RED + "Invalid credentials. Access denied." + Style.RESET_ALL)
 
+
+# Check you are already a customer or not
 def check_already_customer():
-   isValid = input("\nAre you a Customer?  YES/NO : ")
-   if isValid == "YES":
-    return user_login()
-   else:
-    return user_registration()
+    isValid = input("\nAre you a Customer?  YES/NO : ")
+    if isValid == "YES":
+        return user_login()
+    else:
+        return user_registration()
 
-   
 
+# Register a customer
 def user_registration():
     print("\nUser Registration:")
     valid = input("Proceed Further? YES/NO : ")
-    
+
     if valid == "NO":
         return user_login()
-    
+
     name = input("Enter your name: ")
     email = input("Enter your email: ")
 
@@ -216,19 +229,21 @@ def user_registration():
         return user_login()
 
 
+# Login a customer
 def user_login():
     print("\nUser Login:")
-    
+
     valid = input("Proceed Further? YES/NO : ")
-    
+
     if valid == "NO":
         return user_registration()
-    
+
     email = input("Enter your email: ")
     password = getpass("Enter your password: ")
 
     if email in users and users[email]["password"] == password:
-        print(Fore.GREEN + f"Welcome, {users[email]['name']}!" + Style.RESET_ALL)
+        print(Fore.GREEN +
+              f"Welcome, {users[email]['name']}!" + Style.RESET_ALL)
         user_section(email)
     else:
         print(Fore.RED + "Invalid credentials. Access denied." + Style.RESET_ALL)
