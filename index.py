@@ -79,8 +79,45 @@ def update_dish_availability():
         print("Dish not found in the menu.")
 
 
+
+    customer_name = input("\nEnter customer name: ")
+    order_items = input("Enter dish IDs (comma-separated): ").split(",")
+    order_status = "received"
+    order_id = len(orders) + 1
+
+    for dish_id in order_items:
+        if dish_id in menu:
+            dish_info = menu[dish_id]
+            if not dish_info["available"]:
+                print(
+                    Fore.RED + f"{dish_info['name']} is not available. Order cannot be processed." + Style.RESET_ALL)
+                return
+
+            if dish_info["quantity"] <= 0:
+                print(
+                    Fore.RED + f"{dish_info['name']} is out of stock. Order cannot be processed." + Style.RESET_ALL)
+                return
+
+            orders.append({
+                "order_id": order_id,
+                "customer_name": customer_name,
+                "dish_id": dish_id,
+                "status": order_status
+            })
+
+            # Reduce the quantity of the ordered dish by 1
+            dish_info["quantity"] -= 1
+            print(
+                Fore.GREEN + f"{dish_info['name']} added to the order! Order ID: {order_id}" + Style.RESET_ALL)
+        else:
+            print(
+                Fore.RED + f"Dish with ID {dish_id} not found in the menu." + Style.RESET_ALL)
+            return
+
+    print("Order processed successfully!")
+
 # Takes an order from the user
-def take_order():
+def take_order(email):
     customer_name = input("\nEnter customer name: ")
     order_items = input("Enter dish IDs (comma-separated): ").split(",")
     order_status = "received"
